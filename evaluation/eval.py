@@ -25,7 +25,7 @@ def FedAvg(w,weights):
 
     return w_avg
 
-def Apply(g_model,local,q):
+def Apply(g_model,local):
     
     w = g_model
     l_w = local
@@ -81,8 +81,9 @@ def train_epoch(model, Loader, loss_func,dis,epoch, m_locals,aucs):
     mdis = mdis / np.sum(newdis)
     for trainLoader in Loader:
         batch_num = 0
+        #model.load_state_dict(Apply(Init_w,m_locals[Loader.index(trainLoader)]))
         optimizer = optim.Adam(model.parameters(), lr=C.LR, amsgrad=False)
-
+        
         for e in range(E):
             for batch in tqdm.tqdm(trainLoader, desc='\r\nTraining:    ', mininterval=2):
                 batch_num += 1
